@@ -1,7 +1,50 @@
+@{ var action = ViewContext.RouteData.Values["action"]?.ToString(); }
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>@ViewData["Title"] · Stockroom</title><link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /><link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head>
-<body><a class="visually-hidden-focusable" href="#main">Skip to content</a><header class="topbar"><div class="container d-flex align-items-center justify-content-between gap-3"><a class="brand" asp-controller="Products" asp-action="Index"><span class="brand-icon">S</span> Stockroom<span class="brand-sub">INVENTORY MANAGER</span></a><a class="nav-link text-white" asp-controller="Products" asp-action="Index">Products</a></div></header>
-<main id="main" class="container py-4 py-lg-5">@if (TempData["Success"] is string message) { <div class="alert alert-success" role="status">@message</div> }@RenderBody()</main>
-<footer class="container py-4 text-secondary small border-top d-flex justify-content-between"><span>Stockroom / DevExcel assessment</span><span>Movement-based inventory · UTC</span></footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script><script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script><script src="~/js/site.js" asp-append-version="true"></script>@await RenderSectionAsync("Scripts", required: false)</body></html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · Inventory Management</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<a class="visually-hidden-focusable skip-link" href="#main">Skip to content</a>
+<aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="appSidebar" aria-labelledby="brandTitle">
+    <div class="sidebar-brand">
+        <a asp-controller="Products" asp-action="Index" class="brand">
+            <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="/icons.svg#box" /></svg></span>
+            <span id="brandTitle">Inventory<span class="brand-caption">MANAGEMENT</span></span>
+        </a>
+        <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#appSidebar" aria-label="Close navigation"></button>
+    </div>
+    <div class="sidebar-body">
+        <div class="nav-label">WORKSPACE</div>
+        <nav aria-label="Main navigation">
+            <a class="sidebar-link active" asp-controller="Products" asp-action="Index" aria-current="@(action == "Index" ? "page" : null)"><svg class="icon" aria-hidden="true"><use href="/icons.svg#grid" /></svg>Products<span class="nav-dot"></span></a>
+        </nav>
+        <div class="sidebar-note"><svg class="icon" aria-hidden="true"><use href="/icons.svg#layers" /></svg><strong>Every movement matters.</strong><p>A clear history of everything received and issued.</p></div>
+    </div>
+    <div class="sidebar-footer"><span class="workspace-avatar">IM</span><div><strong>Inventory workspace</strong><span>Local workspace</span></div></div>
+</aside>
+<div class="app-frame">
+    <header class="app-topbar">
+        <button class="btn icon-button d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#appSidebar" aria-controls="appSidebar" aria-label="Open navigation"><svg class="icon" aria-hidden="true"><use href="/icons.svg#menu" /></svg></button>
+        <nav aria-label="Breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index">Workspace</a></li><li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li></ol></nav>
+        <span class="topbar-context"><span class="status-dot"></span>Inventory management</span>
+    </header>
+    <main id="main" class="main-content">
+        @if (TempData["Success"] is string message)
+        {
+            <div class="alert alert-success notification" role="status"><svg class="icon" aria-hidden="true"><use href="/icons.svg#check" /></svg><div><strong>All set</strong><div>@message</div></div></div>
+        }
+        @RenderBody()
+    </main>
+    <footer class="app-footer"><span>Inventory Management</span><span>All movement timestamps are shown in UTC</span></footer>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

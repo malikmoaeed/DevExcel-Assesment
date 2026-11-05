@@ -1,11 +1,31 @@
 @model InventoryManagement.Web.ViewModels.ProductForm
 @{ var editing = Model.Id > 0; ViewData["Title"] = editing ? "Edit product" : "Add product"; }
-<a class="back-link" asp-action="Index">← All products</a><div class="page-heading"><div><div class="eyebrow">PRODUCT INFORMATION</div><h1>@ViewData["Title"]</h1><p class="text-secondary">Define your product. Stock is managed through movement history.</p></div></div>
-<section class="panel form-panel"><form asp-action="@(editing ? "Edit" : "Create")" asp-route-id="@(editing ? Model.Id : (int?)null)" method="post" data-product-form data-was-active="@Model.IsActive.ToString().ToLowerInvariant()">
-<input asp-for="Id" type="hidden" /><div asp-validation-summary="All" class="text-danger" role="alert"></div>
-<div class="row g-4"><div class="col-md-4"><label asp-for="Sku" class="form-label"></label><input asp-for="Sku" class="form-control" /><span asp-validation-for="Sku" class="text-danger"></span><div class="form-text">A unique product identifier.</div></div><div class="col-md-8"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
-<div class="col-12"><label asp-for="Description" class="form-label"></label><textarea asp-for="Description" class="form-control" rows="4"></textarea><span asp-validation-for="Description" class="text-danger"></span></div>
-<div class="col-md-6"><label asp-for="ReorderLevel" class="form-label"></label><input asp-for="ReorderLevel" class="form-control" min="0" /><span asp-validation-for="ReorderLevel" class="text-danger"></span><div class="form-text">Low stock is flagged at or below this quantity.</div></div>
-@if (editing) { <div class="col-md-6 d-flex align-items-center"><div><div class="form-check form-switch"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label"></label></div><div class="form-text">Inactive products retain history and cannot receive movements.</div></div></div> }
-</div><div class="form-actions"><button class="btn btn-primary" type="submit">@(editing ? "Save changes" : "Create product")</button><a asp-action="Index" class="btn btn-light">Cancel</a></div></form></section>
+<a class="back-link" asp-action="Index">← All products</a>
+<div class="page-heading"><div><div class="eyebrow">PRODUCT CATALOG</div><h1>@ViewData["Title"]</h1><p>@(editing ? "Keep your product information accurate and up to date." : "A new product starts with the right details.")</p></div><span class="required-hint"><span class="required-mark">*</span> Required fields</span></div>
+<div class="form-layout">
+<section class="panel form-panel">
+    <div class="panel-toolbar"><div class="section-title"><span class="section-icon"><svg class="icon" aria-hidden="true"><use href="/icons.svg#box" /></svg></span><div><h2>Product details</h2><p>The essentials for your inventory catalog.</p></div></div></div>
+    <form asp-action="@(editing ? "Edit" : "Create")" asp-route-id="@(editing ? Model.Id : (int?)null)" method="post" data-product-form data-was-active="@Model.IsActive.ToString().ToLowerInvariant()">
+        <div class="form-body">
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="All" class="text-danger validation-panel" role="alert"></div>
+            <div class="row g-4">
+                <div class="col-md-4"><label asp-for="Sku" class="form-label">SKU <span class="required-mark" aria-hidden="true">*</span></label><input asp-for="Sku" class="form-control" placeholder="e.g. LAP-001" aria-describedby="skuHelp" /><span asp-validation-for="Sku" class="text-danger"></span><div id="skuHelp" class="form-text">A unique identifier for this product.</div></div>
+                <div class="col-md-8"><label asp-for="Name" class="form-label">Name <span class="required-mark" aria-hidden="true">*</span></label><input asp-for="Name" class="form-control" placeholder="Enter product name" /><span asp-validation-for="Name" class="text-danger"></span></div>
+                <div class="col-12"><label asp-for="Description" class="form-label"></label><span class="optional-label">Optional</span><textarea asp-for="Description" class="form-control" rows="4" placeholder="Add specifications or a short product description"></textarea><span asp-validation-for="Description" class="text-danger"></span></div>
+            </div>
+            <div class="form-section-heading"><h2>Inventory preferences</h2><p>Set when this product needs your attention.</p></div>
+            <div class="row g-4">
+                <div class="col-md-6"><label asp-for="ReorderLevel" class="form-label">Reorder level <span class="required-mark" aria-hidden="true">*</span></label><div class="unit-input"><input asp-for="ReorderLevel" class="form-control" min="0" aria-describedby="reorderHelp" /><span>units</span></div><span asp-validation-for="ReorderLevel" class="text-danger"></span><div id="reorderHelp" class="form-text">Low stock is flagged at or below this quantity.</div></div>
+                @if (editing)
+                {
+                    <div class="col-md-6"><div class="status-setting"><div class="form-check form-switch"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label"></label></div><p>Inactive products retain their history. New movements are paused until reactivated.</p></div></div>
+                }
+            </div>
+        </div>
+        <div class="form-actions"><a asp-action="Index" class="btn btn-light">Cancel</a><button class="btn btn-primary" type="submit"><svg class="icon" aria-hidden="true"><use href="/icons.svg#check" /></svg>@(editing ? "Save changes" : "Create product")</button></div>
+    </form>
+</section>
+<aside class="form-guidance"><span class="section-icon"><svg class="icon" aria-hidden="true"><use href="/icons.svg#info" /></svg></span><h2>A reliable stock history</h2><p>Product details describe what you keep. Stock movements track how much you have.</p><hr /><h3>Adding opening stock?</h3><p>Save your product, then record a <strong>Stock In</strong> on its details page.</p><h3>Keeping records intact</h3><p>Deactivate products you no longer use. Their movement history stays available.</p></aside>
+</div>
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }

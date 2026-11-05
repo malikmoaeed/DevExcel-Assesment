@@ -1,5 +1,7 @@
 # Assessment compliance and verification
 
+**Update — 6 November 2026:** The UI has since been modernized and all 31 tests rerun successfully. Desktop, tablet and mobile screenshots were inspected. See [UI_REDESIGN.md](UI_REDESIGN.md) for the current file list and verification; its browser results supersede the older screenshot limitation below.
+
 Verified on 5 November 2026 (Asia/Karachi), with .NET SDK 10.0.302 and real SQL Server LocalDB 17.0.4025.3.
 
 ## Final automated results

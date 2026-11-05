@@ -1,3 +1,3 @@
 @model string
 @{ ViewData["Title"] = "Unable to complete request"; }
-<section class="panel text-center py-5"><h1>Unable to complete request</h1><p class="text-secondary">@Model</p><a class="btn btn-primary" asp-controller="Products" asp-action="Index">Back to products</a></section>
+<section class="panel problem-panel"><span class="empty-icon"><svg class="icon" aria-hidden="true"><use href="/icons.svg#info" /></svg></span><div class="eyebrow">LET'S GET YOU BACK ON TRACK</div><h1>Unable to complete request</h1><p>@Model</p><a class="btn btn-primary" asp-controller="Products" asp-action="Index">Back to products<svg class="icon" aria-hidden="true"><use href="/icons.svg#arrow" /></svg></a></section>
