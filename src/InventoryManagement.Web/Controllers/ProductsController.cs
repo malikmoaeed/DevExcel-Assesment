@@ -9,6 +9,7 @@ public sealed class ProductsController(ProductService products, StockService sto
     public async Task<IActionResult> Index(string? search, CancellationToken ct) => View(new ProductListModel(await products.SearchAsync(search, ct), search));
     public async Task<IActionResult> Details(int id, CancellationToken ct) => View(await DetailsModel(id, new(), ct));
     public IActionResult Create() => View("Form", new ProductForm());
+
     [HttpPost]
     public async Task<IActionResult> Create(ProductForm form, CancellationToken ct)
     {
@@ -24,6 +25,7 @@ public sealed class ProductsController(ProductService products, StockService sto
         var p = await products.GetAsync(id, ct);
         return View("Form", new ProductForm { Id = p.Id, Sku = p.Sku, Name = p.Name, Description = p.Description, ReorderLevel = p.ReorderLevel, IsActive = p.IsActive });
     }
+
     [HttpPost]
     public async Task<IActionResult> Edit(int id, ProductForm form, CancellationToken ct)
     {
@@ -35,6 +37,7 @@ public sealed class ProductsController(ProductService products, StockService sto
         }
         return View("Form", form);
     }
+
     [HttpPost]
     public async Task<IActionResult> RecordMovement(int id, [Bind(Prefix = "Movement")] MovementForm movement, CancellationToken ct)
     {
