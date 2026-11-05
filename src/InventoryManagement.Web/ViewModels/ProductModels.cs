@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using InventoryManagement.Application.DTOs;
 using InventoryManagement.Domain.Enums;
 namespace InventoryManagement.Web.ViewModels;
+
 public sealed class ProductForm
 {
     public int Id { get; set; }

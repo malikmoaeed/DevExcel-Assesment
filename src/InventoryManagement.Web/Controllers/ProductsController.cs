@@ -3,6 +3,7 @@ using InventoryManagement.Domain.Exceptions;
 using InventoryManagement.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 namespace InventoryManagement.Web.Controllers;
+
 public sealed class ProductsController(ProductService products, StockService stock) : Controller
 {
     public async Task<IActionResult> Index(string? search, CancellationToken ct) => View(new ProductListModel(await products.SearchAsync(search, ct), search));
@@ -39,7 +40,8 @@ public sealed class ProductsController(ProductService products, StockService sto
     {
         if (ModelState.IsValid)
         {
-            try {
+            try
+            {
                 var balance = await stock.RecordAsync(id, movement.Type, movement.Quantity, movement.Note, movement.RequestId, ct);
                 TempData["Success"] = $"Stock movement recorded. Current stock: {balance:N0} units.";
                 return RedirectToAction(nameof(Details), new { id });

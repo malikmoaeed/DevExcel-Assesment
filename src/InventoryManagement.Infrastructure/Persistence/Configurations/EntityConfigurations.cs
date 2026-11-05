@@ -7,7 +7,8 @@ public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> b)
     {
-        b.ToTable("Products", t => {
+        b.ToTable("Products", t =>
+        {
             t.HasCheckConstraint("CK_Products_Reorder", "[ReorderLevel] >= 0");
             t.HasCheckConstraint("CK_Products_Required", "LEN(LTRIM(RTRIM([Sku]))) > 0 AND LEN(LTRIM(RTRIM([Name]))) > 0");
         });
@@ -23,7 +24,8 @@ public sealed class MovementConfiguration : IEntityTypeConfiguration<StockMoveme
 {
     public void Configure(EntityTypeBuilder<StockMovement> b)
     {
-        b.ToTable("StockMovements", t => {
+        b.ToTable("StockMovements", t =>
+        {
             t.HasCheckConstraint("CK_Movements_Quantity", "[Quantity] > 0");
             t.HasCheckConstraint("CK_Movements_Type", "[Type] IN (1, 2)");
         });

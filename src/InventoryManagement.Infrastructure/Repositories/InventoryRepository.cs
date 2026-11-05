@@ -13,16 +13,16 @@ namespace InventoryManagement.Infrastructure.Repositories;
 
 public sealed class InventoryRepository(ApplicationDbContext db, ILogger<InventoryRepository> logger) : IInventoryRepository
 {
-    private IQueryable<ProductDto> Products => db.Products.AsNoTracking().Select(p => new ProductDto(
+    private IQueryable<ProductDto> Project(IQueryable<Product> query) => query.Select(p => new ProductDto(
         p.Id, p.Sku, p.Name, p.Description, p.ReorderLevel, p.IsActive, p.CreatedUtc,
         db.StockMovements.Where(m => m.ProductId == p.Id).Sum(m => m.Type == MovementType.In ? (long)m.Quantity : -(long)m.Quantity)));
     public async Task<IReadOnlyList<ProductDto>> SearchAsync(string? search, CancellationToken ct)
     {
-        var query = Products;
+        var query = db.Products.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(search)) query = query.Where(p => p.Sku.Contains(search) || p.Name.Contains(search));
-        return await query.OrderBy(p => p.Name).ToListAsync(ct);
+        return await Project(query.OrderBy(p => p.Name)).ToListAsync(ct);
     }
-    public Task<ProductDto?> GetAsync(int id, CancellationToken ct) => Products.SingleOrDefaultAsync(p => p.Id == id, ct);
+    public Task<ProductDto?> GetAsync(int id, CancellationToken ct) => Project(db.Products.AsNoTracking().Where(p => p.Id == id)).SingleOrDefaultAsync(ct);
     public Task<bool> SkuExistsAsync(string sku, int? excludingId, CancellationToken ct) => db.Products.AnyAsync(p => p.Sku == sku && (!excludingId.HasValue || p.Id != excludingId), ct);
     public async Task<int> CreateAsync(Product product, CancellationToken ct)
     {

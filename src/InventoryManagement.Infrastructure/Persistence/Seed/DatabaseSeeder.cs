@@ -2,6 +2,7 @@ using InventoryManagement.Domain.Entities;
 using InventoryManagement.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 namespace InventoryManagement.Infrastructure.Persistence.Seed;
+
 public static class DatabaseSeeder
 {
     public static async Task SeedAsync(ApplicationDbContext db, CancellationToken ct = default)
