@@ -1,24 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using InventoryManagement.Web.Models;
-
 namespace InventoryManagement.Web.Controllers;
-
-public class HomeController : Controller
-{
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+public sealed class HomeController : Controller {
+ [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+ public IActionResult Error() { Response.StatusCode = 500; return View("Problem", "Something went wrong. Please try again or contact your administrator."); }
+ public IActionResult Status(int code) { Response.StatusCode = code; return View("Problem", code == 404 ? "We couldn't find that product or page." : "This request could not be completed. Return to products and try again."); }
 }

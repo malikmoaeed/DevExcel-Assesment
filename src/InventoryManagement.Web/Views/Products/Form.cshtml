@@ -1,0 +1,11 @@
+@model InventoryManagement.Web.ViewModels.ProductForm
+@{ var editing = Model.Id > 0; ViewData["Title"] = editing ? "Edit product" : "Add product"; }
+<a class="back-link" asp-action="Index">← All products</a><div class="page-heading"><div><div class="eyebrow">PRODUCT INFORMATION</div><h1>@ViewData["Title"]</h1><p class="text-secondary">Define your product. Stock is managed through movement history.</p></div></div>
+<section class="panel form-panel"><form asp-action="@(editing ? "Edit" : "Create")" asp-route-id="@(editing ? Model.Id : (int?)null)" method="post" data-product-form data-was-active="@Model.IsActive.ToString().ToLowerInvariant()">
+<input asp-for="Id" type="hidden" /><div asp-validation-summary="All" class="text-danger" role="alert"></div>
+<div class="row g-4"><div class="col-md-4"><label asp-for="Sku" class="form-label"></label><input asp-for="Sku" class="form-control" /><span asp-validation-for="Sku" class="text-danger"></span><div class="form-text">A unique product identifier.</div></div><div class="col-md-8"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+<div class="col-12"><label asp-for="Description" class="form-label"></label><textarea asp-for="Description" class="form-control" rows="4"></textarea><span asp-validation-for="Description" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="ReorderLevel" class="form-label"></label><input asp-for="ReorderLevel" class="form-control" min="0" /><span asp-validation-for="ReorderLevel" class="text-danger"></span><div class="form-text">Low stock is flagged at or below this quantity.</div></div>
+@if (editing) { <div class="col-md-6 d-flex align-items-center"><div><div class="form-check form-switch"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label"></label></div><div class="form-text">Inactive products retain history and cannot receive movements.</div></div></div> }
+</div><div class="form-actions"><button class="btn btn-primary" type="submit">@(editing ? "Save changes" : "Create product")</button><a asp-action="Index" class="btn btn-light">Cancel</a></div></form></section>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

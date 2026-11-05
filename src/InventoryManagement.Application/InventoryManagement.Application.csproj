@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryManagement.Domain\InventoryManagement.Domain.csproj" />
@@ -11,3 +11,4 @@
   </PropertyGroup>
 
 </Project>
+
