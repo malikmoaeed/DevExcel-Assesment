@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] · Inventory Management</title>
+    <title>@ViewData["Title"] · DevExcel Inventory Management</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -31,7 +31,7 @@
     <header class="app-topbar">
         <button class="btn icon-button d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#appSidebar" aria-controls="appSidebar" aria-label="Open navigation"><svg class="icon" aria-hidden="true"><use href="/icons.svg#menu" /></svg></button>
         <nav aria-label="Breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index">Workspace</a></li><li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li></ol></nav>
-        <span class="topbar-context"><span class="status-dot"></span>Inventory management</span>
+        <span class="topbar-context"><span class="status-dot"></span>DevExcel Inventory management</span>
     </header>
     <main id="main" class="main-content">
         @if (TempData["Success"] is string message)
